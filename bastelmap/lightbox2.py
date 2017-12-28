@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from docutils import nodes
+from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
 from sphinx.transforms import SphinxTransform
 from sphinx.util.osutil import ensuredir, copyfile
