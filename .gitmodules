@@ -1,0 +1,3 @@
+[submodule "bastelmap/lightbox2"]
+	path = bastelmap/lightbox2
+	url = https://github.com/lokesh/lightbox2.git
