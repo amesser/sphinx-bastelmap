@@ -28,15 +28,15 @@ class lightbox2_reference(nodes.reference):
     pass
 
 class LightBox2Transform(SphinxTransform):
-    default_priority = 2000
+    default_priority = 10
 
     def apply(self):
         for node in self.document.traverse(nodes.image):
-            if 'group' not in node:
+            if 'slideshow_group' not in node:
                 continue
 
             reference_node = lightbox2_reference()
-            reference_node['group']  = node['group']
+            reference_node['lightbox_group']  = node['slideshow_group']
 
             node.replace_self(reference_node)
             reference_node.append(node)
@@ -64,10 +64,7 @@ def visit_lightbox2_reference_html(self,node):
     if 'reftitle' in node: 
         atts['title'] = node['reftitle']
     
-    if 'group' in node:
-        atts['data-lightbox'] = node['group']
-    else:
-        atts['data-lightbox'] = 'uri' 
+    atts['data-lightbox'] = node['lightbox_group'] or uri
 
     self.body.append(self.starttag(node, 'a', '', **atts)) 
     
@@ -115,8 +112,8 @@ def setup(app):
     # add a group option to image/figure directives which is used to enable the
     # lightbox feature itself and to group the images
 
-    images.Image.option_spec['group'] = directives.unchanged_required
-    images.Figure.option_spec['group'] = directives.unchanged_required
+    images.Image.option_spec['slideshow_group'] = directives.unchanged
+    images.Figure.option_spec['slideshow_group'] = directives.unchanged
 
     # Add transform which inserts the lightbox reference nodes 
     app.add_transform(LightBox2Transform)
