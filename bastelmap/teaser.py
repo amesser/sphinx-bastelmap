@@ -66,9 +66,10 @@ class TeaserTextCollector(EnvironmentCollector):
 
         date = m.group(0)
 
+        title_node = None
         for x in doctree.traverse():
             if isinstance(x, nodes.title):
-                title_node = x
+                title_node = title_node or x
             elif isinstance(x, nodes.paragraph):
                 text_node = x
                 break
