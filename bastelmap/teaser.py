@@ -67,6 +67,7 @@ class TeaserTextCollector(EnvironmentCollector):
         date = m.group(0)
 
         title_node = None
+        text_node  = None
         for x in doctree.traverse():
             if isinstance(x, nodes.title):
                 title_node = title_node or x
@@ -88,7 +89,8 @@ class TeaserTextCollector(EnvironmentCollector):
         item['article_date'] = date
 
         ref += title
-        ref += text_node
+        if text_node is not None:
+            ref += text_node
         ref += nodes.paragraph('', 'Weiterlesen...', classes=['teaser-readmore'])
 
         teasers = app.env.teasers
