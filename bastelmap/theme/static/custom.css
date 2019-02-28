@@ -1,0 +1,62 @@
+/* bastelmap.de's adaptions for alabaster sphinx theme */
+
+body {
+  background-color: #eee;
+}
+
+div.body {
+  padding: 30px;
+}
+
+.teaser-wrapper ol {
+  list-style: none;
+  margin: 0;
+}
+
+.teaser-wrapper ol li {
+  margin: 0.5em 0 0.5em 0;
+}
+
+.teaser-wrapper ol li:hover {
+  background-color: #eee;
+}
+
+.teaser-wrapper ol li + li {
+  border-top: 0.2em solid #eee;
+}
+
+.teaser-wrapper ol li a {
+  color: #3E4349;
+}
+
+/* Same format settings as h2 */
+.teaser-title {
+  font-size: 180%;
+  font-family: 'Garamond', 'Georgia', serif;
+  font-weight: normal;
+  margin: 30px 0px 10px 0px;
+  padding: 0;
+}
+
+.teaser-readmore {
+  text-align: right;
+  color: #004B6B;
+}
+
+div.siteheader {
+}
+
+div.siteheader h1 {
+    font-family: 'Garamond', 'Georgia', serif;
+    font-weight: bold;
+    font-size: 240%;
+    background-image: url('header.jpg');
+    min-height: 219px;
+}
+
+div.siteheader h1 a {
+    text-decoration: none;
+    color: #EEE;
+    /* color: #3E4349; */
+}
+

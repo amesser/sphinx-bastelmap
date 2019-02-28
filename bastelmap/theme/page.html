@@ -13,7 +13,14 @@
 
 {%- block body %}
 <h1 class="title">{{ title }}</h1>
-
+{%- set meta_para = joiner(' ') -%}
+{%- if meta.Authors is defined %}
+{{ meta_para()|default('<p class="docinfo">', True) }}Geschrieben von {{ meta.Authors }}
+{%- endif -%}
+{%- if meta.Date is defined -%}
+{{ meta_para()|default('<p class="docinfo">', True) }}am {{ meta.Date.strftime('%d. %B %Y') }}
+{%- endif -%}    
+{{ meta_para()|replace(' ', '</p>') }}
 {{ super() }}
 {%- endblock %}
 

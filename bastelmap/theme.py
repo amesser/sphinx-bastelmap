@@ -14,61 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sphinx.transforms import SphinxTransform
 from sphinx.writers.html import HTMLTranslator
 import docutils.transforms.frontmatter
+import datetime
 from docutils import nodes
 import os
 import re
-
-class DumpTreeTransform(SphinxTransform):
-    default_priority = 1000
-
-    def apply(self):
-        docname  = self.env.docname
-        metadata = self.env.metadata[docname]
-
-        authors  = metadata.get('Authors', None)
-        date     = metadata.get('Date', None)
-
-        # only document names from sphinx.writers.html import HTMLWriter, HTMLTranslatorstarting with a date are
-        # regarded as an articfrom sphinx.writers.html import HTMLWriter, HTMLTranslatorle
-        if date is None:
-            basename = os.path.basename(docname)
-            m = re.match(r'([0-9]+-[0-9]+-[0-9]+)-', basename)
-
-            if not m and authors is None:
-                return;
-
-            date = m.group(0)
-
-        # check if at least author or date meta information is available
-        if all([date is None, authors is None]):
-            return
-
-        title_node = self.document.next_node(nodes.title)
-
-        title_node = self.document.next_node(nodes.title)
-        parent = title_node.parent
-
-        info = nodes.docinfo()
-        parent.insert(parent.index(title_node)+1, info)
-
-        if authors is not None:
-            authors_node = nodes.authors()
-            info += authors_node
-
-            author_node = nodes.author(text=authors)
-            authors_node += author_node
-
-        if date is not None:
-            date_node = nodes.date(text=date)
-            info += date_node
-
-
-
-            #print(dir(node))
-        #    print(type(node))
 
 class FixedHTMLTranslator(HTMLTranslator):
     def depart_docinfo(self, node):
@@ -88,12 +39,28 @@ class DocTitle(docutils.transforms.frontmatter.TitlePromoter):
     def apply(self):
         self.promote_title(self.document)
 
+def env_updated_handler(app, env):
+    date_formats = (
+        '%d.%m.%Y',
+        '%Y-%m-%d',
+    )
+
+    for doc, meta in env.metadata.items():
+        if 'Date' in meta:
+            for f in date_formats:
+                try:
+                    meta['Date'] = datetime.datetime.strptime(meta['Date'],f)
+                    break
+                except ValueError:
+                    continue
+            else:
+                raise
+                raise ValueError(u'Failed to parse date {!r}'.format(meta['Date']))
+
 def setup(app):
     # register theme with sphinx
     app.add_html_theme('bastelmap', os.path.abspath(os.path.dirname(__file__) + os.sep + 'theme'))
-    #app.config.html_translator_class = 'sphinx_confluence.HTMLConfluenceTranslator'
-    # only for newer sphinx versions
-    #app.set_translator('html', FixedHTMLTranslator)
-
+ 
+    # setup some transformations
     app.add_post_transform(DocTitle)
-
+    app.connect('env-updated', env_updated_handler)
