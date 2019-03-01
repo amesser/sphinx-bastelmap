@@ -3,7 +3,7 @@
     ~~~~~~~~~~~~~~~~~~~~
 
     Sphinx layout template for bastelmap.de
-    
+
 
     :copyright: Copyright 2017 Andreas Messer <andi@bastelmap.de>
     :license: GPL, see LICENSE for details.
@@ -15,11 +15,11 @@
 <h1 class="title">{{ title }}</h1>
 {%- set meta_para = joiner(' ') -%}
 {%- if meta.Authors is defined %}
-{{ meta_para()|default('<p class="docinfo">', True) }}Geschrieben von {{ meta.Authors }}
+{{ meta_para()|default('<p class="docinfo">Geschrieben ', True) }}von {{ meta.Authors }}
 {%- endif -%}
 {%- if meta.Date is defined -%}
-{{ meta_para()|default('<p class="docinfo">', True) }}am {{ meta.Date.strftime('%d. %B %Y') }}
-{%- endif -%}    
+{{ meta_para()|default('<p class="docinfo">Geschrieben ', True) }}am {{ meta.Date.strftime('%d. %B %Y') }}
+{%- endif -%}
 {{ meta_para()|replace(' ', '</p>') }}
 {{ super() }}
 {%- endblock %}

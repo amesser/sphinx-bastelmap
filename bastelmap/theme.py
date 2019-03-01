@@ -31,8 +31,8 @@ class FixedHTMLTranslator(HTMLTranslator):
         del self.body[start:]
 
 class DocTitle(docutils.transforms.frontmatter.TitlePromoter):
-    ''' Renable promotion of first document section to document itself 
-        
+    ''' Renable promotion of first document section to document itself
+
         Must use a very high priority to not confuse remaining sphinx stuff'''
 
     default_priority = 1000
@@ -47,20 +47,20 @@ def env_updated_handler(app, env):
 
     for doc, meta in env.metadata.items():
         if 'Date' in meta:
-            for f in date_formats:
-                try:
-                    meta['Date'] = datetime.datetime.strptime(meta['Date'],f)
-                    break
-                except ValueError:
-                    continue
-            else:
-                raise
-                raise ValueError(u'Failed to parse date {!r}'.format(meta['Date']))
+            if isinstance(meta['Date'], (str, unicode)):
+                for f in date_formats:
+                    try:
+                        meta['Date'] = datetime.datetime.strptime(meta['Date'],f)
+                        break
+                    except ValueError:
+                        continue
+                else:
+                    raise ValueError(u'Failed to parse date {!r}'.format(meta['Date']))
 
 def setup(app):
     # register theme with sphinx
     app.add_html_theme('bastelmap', os.path.abspath(os.path.dirname(__file__) + os.sep + 'theme'))
- 
+
     # setup some transformations
     app.add_post_transform(DocTitle)
     app.connect('env-updated', env_updated_handler)

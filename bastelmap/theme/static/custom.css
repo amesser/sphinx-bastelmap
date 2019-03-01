@@ -44,14 +44,15 @@ div.body {
 }
 
 div.siteheader {
+  padding-left: .5em;
+  background-image: url('header.jpg');
 }
 
 div.siteheader h1 {
-    font-family: 'Garamond', 'Georgia', serif;
-    font-weight: bold;
-    font-size: 240%;
-    background-image: url('header.jpg');
-    min-height: 219px;
+  font-family: 'Garamond', 'Georgia', serif;
+  font-weight: bold;
+  font-size: 240%;
+  min-height: 219px;
 }
 
 div.siteheader h1 a {
@@ -60,3 +61,13 @@ div.siteheader h1 a {
     /* color: #3E4349; */
 }
 
+p.docinfo {
+  font-size: 80%;
+  font-style: italic;
+  margin-top: 0;
+  text-align: center;
+}
+
+h1.title {
+  text-align: center;
+}
