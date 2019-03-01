@@ -69,5 +69,14 @@ p.docinfo {
 }
 
 h1.title {
+  font-size: 200% !important;
+  font-weight: bold !important;
   text-align: center;
 }
+
+div.body h1 { font-size: 175%; }
+div.body h2 { font-size: 150%; }
+div.body h3 { font-size: 130%; }
+div.body h4 { font-size: 110%; }
+div.body h5 { font-size: 100%; }
+div.body h6 { font-size: 100%; }
