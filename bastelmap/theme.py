@@ -47,7 +47,7 @@ def env_updated_handler(app, env):
 
     for doc, meta in env.metadata.items():
         if 'Date' in meta:
-            if isinstance(meta['Date'], (str, unicode)):
+            if isinstance(meta['Date'], str):
                 for f in date_formats:
                     try:
                         meta['Date'] = datetime.datetime.strptime(meta['Date'],f)
